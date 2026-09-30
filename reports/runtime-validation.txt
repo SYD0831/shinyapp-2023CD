@@ -1,0 +1,5 @@
+Runtime plotting and all six subset fields: PASS
+Shiny server reactive UMAP, CD34/LYZ queries and 1197-cell sample subset: PASS
+Startup RSS MiB: 228.9
+Before gene queries RSS MiB: 433.9
+Sampled peak RSS MiB: 461

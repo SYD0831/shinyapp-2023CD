@@ -1,0 +1,5 @@
+script <- normalizePath(sub("^--file=", "", grep("^--file=", commandArgs(FALSE), value=TRUE)[1]))
+source(file.path(dirname(script), "common.R"))
+cli <- commandArgs(TRUE)
+port <- as.integer(if(length(cli)) cli[1] else Sys.getenv("ATLAS_PORT", "3838"))
+shiny::runApp(app_dir, host="127.0.0.1", port=port, launch.browser=FALSE)

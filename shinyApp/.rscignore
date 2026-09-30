@@ -1,0 +1,10 @@
+.git/
+logs/
+*.log
+*.Rdata
+*.RData
+final_seurat.rds
+.DS_Store
+sc1assay_RNA.h5
+manifest.json
+*.partial

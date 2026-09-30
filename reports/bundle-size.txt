@@ -1,0 +1,3 @@
+App bytes: 468284185
+Actual rsconnect bundle bytes: 466754966
+rsconnect: 1.7.0

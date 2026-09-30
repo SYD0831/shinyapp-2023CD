@@ -1,0 +1,2 @@
+ShinyCell2 1.0.0
+GitHub commit 33bfc8ba232f0c829b6b23181cb83089d58e7879
