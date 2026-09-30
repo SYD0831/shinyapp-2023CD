@@ -3,6 +3,7 @@ metadata_labels <- c(scArche_anno = "Cell Type", sample = "Sample",
   lsc_type = "Patient LSC Type", lsc_class = "Cell LSC Class")
 disease_labels <- c(A = "A", Dx = "Newly diagnosed", Rl = "Relapsed")
 atlas_title <- "Single-cell Atlas"
+default_gene <- "MCL1"
 cell_type_colours <- c(
   "LSPC-Quiescent"="#e41a1c", "LSPC-Primed"="#3e8c3b", "LSPC-Cycle"="#ff7f00",
   "GMP-like"="#377eb8", "ProMono-like"="#f781bf", "Mono-like"="#984ea3",

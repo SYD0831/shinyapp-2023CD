@@ -27,6 +27,7 @@
 - Reference-style organization implemented: YES, within the ShinyCell2 native architecture. It is not a pixel-exact replica.
 - Custom CSS: YES, generated from `config/custom.css` into `shinyApp/www/custom.css`.
 - Default tab: Side-by-side DimRed. Cell Type uses the user-specified 15 colors and factor order.
+- Default expression gene: MCL1. Local full-cell expression, UMAP construction and legend extraction passed after this change. The cloud screenshot's generic plotting error remains unconfirmed without runtime logs.
 - Subset controls: initially expanded; default Sample; all six approved fields are available.
 - Disease Status: Dx → Newly diagnosed, Rl → Relapsed, A unchanged. Tissue remains P/B.
 - Browser rendering and interactions were observed in Chrome and Safari. The user also confirmed the local application looked correct. A dedicated narrow/mobile viewport test was not completed.
@@ -50,7 +51,7 @@ Restored HDF5 MD5: `15d92edcd06f64dce4425255dedc0482`.
 
 ## Memory and dependencies
 
-Final local runtime test process: startup RSS 228.9 MiB; before gene queries 433.9 MiB; sampled peak after rendering/query tests 461 MiB. The separate independence test peaked at approximately 528 MiB. These are local macOS process measurements, not continuous peak monitoring or a cloud capacity guarantee. They exclude the separate 2.53 GB generation input.
+Latest local runtime test with MCL1 as the default: startup RSS 242.9 MiB; before gene queries 460.8 MiB; sampled peak after rendering/query tests 523.1 MiB. The separate independence test peaked at approximately 528 MiB. These are local macOS process measurements, not continuous peak monitoring or a cloud capacity guarantee. They exclude the separate 2.53 GB generation input.
 
 Gene expression is read on demand from HDF5. No complete expression matrix is loaded at startup. Reconstructing the split file uses 8 MiB byte buffers. Multi-gene plots read selected genes (up to 50) and may use more memory than single-gene queries.
 

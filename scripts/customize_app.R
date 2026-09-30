@@ -1,4 +1,10 @@
 # Sourced after common.R and config/atlas.R. Rebuilds only app code, never expression data.
+defaults_path <- file.path(app_dir, "sc1def.rds")
+defaults <- readRDS(defaults_path)
+gene_index <- readRDS(file.path(app_dir, "sc1gene.rds"))
+stopifnot(default_gene %in% names(gene_index$RNA))
+defaults$gene1$RNA <- default_gene
+saveRDS(defaults, defaults_path)
 ShinyCell2::makeShinyCodes(shiny.title=atlas_title, shiny.footnotes="", shiny.prefix="sc1",
   shiny.headers="Atlas", shiny.dir=app_dir, defPtSiz=0.5)
 ui_path <- file.path(app_dir, "ui.R")

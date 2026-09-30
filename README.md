@@ -48,6 +48,8 @@ Disease Status displays `Dx` as `Newly diagnosed`, `Rl` as `Relapsed`, and keeps
 
 “Toggle to subset cells” is available on all plot tabs, initially expanded, with Sample selected. All six metadata fields can be selected. UMAP displays unselected cells as a pale background, following ShinyCell2 behavior. An empty selection produces no plot.
 
+The default expression gene is **MCL1**, configured in `config/atlas.R`.
+
 ## Rebuild
 
 Keep the source `pei23_scarche_anno.Rdata` locally in the project root. It must contain a Seurat object named `seurat`.
@@ -59,7 +61,7 @@ Rscript scripts/validate_portable.R
 Rscript scripts/check_bundle.R
 ```
 
-`generate_app.R` also recreates the expression parts and manifest. For code/config-only presentation changes, regenerate code using `customize_app.R` (with `common.R` and `config/atlas.R` sourced), then run `prepare_github.R` to refresh the deployment manifest. Do not edit generated files as the only copy of a customization.
+`generate_app.R` also recreates the expression parts and manifest. For code/config-only presentation changes, run `Rscript scripts/configure_app.R`, then `Rscript scripts/prepare_github.R` to refresh the deployment manifest. Do not edit generated files as the only copy of a customization.
 
 `scripts/deploy_shinyapps.R` remains available for shinyapps.io after configuring credentials separately. It deploys only the allowlisted runtime files.
 

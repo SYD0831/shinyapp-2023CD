@@ -20,6 +20,7 @@ for (field in sc1conf$UI) {
   peak <- max(peak,rss())
 }
 before_gene <- rss()
+stopifnot(identical(sc1def$gene1$RNA, "MCL1"))
 for(gene in c(sc1def$gene1$RNA,"CD34","LYZ","MPO")) {
   stopifnot(gene %in% names(sc1gene$RNA))
   p <- sc2Ddimr(sc1conf,sc1meta,sc1dimr,"umap",gene,"sc1assay_",sc1gene,

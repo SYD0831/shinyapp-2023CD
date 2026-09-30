@@ -37,6 +37,8 @@ conf[ID=="scArche_anno", `:=`(fID=paste(names(cell_type_colours),collapse="|"),
 genes <- intersect(VariableFeatures(obj[["RNA"]]), rownames(expr))
 if (length(genes) < 2) genes <- rownames(expr)
 genes <- head(genes, 10)
+stopifnot(default_gene %in% rownames(expr))
+genes <- head(unique(c(default_gene, genes)), 10)
 dir.create(app_dir, showWarnings=FALSE)
 stopifnot(all(c("assay", "assay.slot", "dimred.to.use") %in% names(formals(makeShinyFiles))))
 makeShinyFiles(obj, conf, assay="RNA", assay.slot="data", dimred.to.use="umap",
