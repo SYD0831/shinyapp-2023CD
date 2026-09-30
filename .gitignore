@@ -1,4 +1,5 @@
 /.R-library/
+/.deploy/
 *.Rdata
 *.RData
 *.independence-test

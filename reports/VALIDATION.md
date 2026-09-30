@@ -18,7 +18,7 @@
 - Runtime payload (before manifest): 468,284,185 bytes.
 - Actual compressed rsconnect deployment bundle: 466,754,966 bytes.
 - The local directory also contains the restored HDF5, so its physical size is larger than the uploaded payload. The restored HDF5 is ignored by Git and excluded from deployment bundles.
-- Largest uploaded files: `expression-parts/rna-001.bin` through `rna-009.bin`, 47,185,920 bytes each. Full list: `runtime-file-sizes.csv`.
+- Largest GitHub files: `expression-parts/rna-001.bin` through `rna-009.bin`, 47,185,920 bytes each.
 - Git and deployment exclude the original Seurat, local R package library, logs, large test plots and test archives.
 
 ## UI
@@ -27,7 +27,7 @@
 - Reference-style organization implemented: YES, within the ShinyCell2 native architecture. It is not a pixel-exact replica.
 - Custom CSS: YES, generated from `config/custom.css` into `shinyApp/www/custom.css`.
 - Default tab: Side-by-side DimRed. Cell Type uses the user-specified 15 colors and factor order.
-- Default expression gene: MCL1. Local full-cell expression, UMAP construction and legend extraction passed after this change. The cloud screenshot's generic plotting error remains unconfirmed without runtime logs.
+- Default expression gene: MCL1. Local full-cell expression, UMAP construction and legend extraction passed after this change. The user confirmed the online issue was resolved after direct deployment.
 - Subset controls: initially expanded; default Sample; all six approved fields are available.
 - Disease Status: Dx → Newly diagnosed, Rl → Relapsed, A unchanged. Tissue remains P/B.
 - Browser rendering and interactions were observed in Chrome and Safari. The user also confirmed the local application looked correct. A dedicated narrow/mobile viewport test was not completed.
@@ -63,8 +63,9 @@ Small generated UI/input compatibility fixes are reproduced by `scripts/customiz
 
 - Posit Connect Cloud repository preparation: READY. Select `main` and `shinyApp/app.R`; `manifest.json` is alongside it.
 - Private GitHub repository requires a Connect Cloud plan supporting private repositories. Published-content privacy is a separate plan setting.
-- Actual cloud deployment/build: NOT RUN. Authentication and publishing remain for the user. Linux dependency installation and cloud performance have not yet been verified.
-- shinyapps.io preparation: READY for authentication and a deployment attempt; use `Rscript scripts/deploy_shinyapps.R`. Expected URL template: `https://<account>.shinyapps.io/single-cell-atlas/`.
+- Direct rsconnect deployment: PASS. Uploaded complete HDF5 and 12 runtime files to account `syd088`; deployed content ID `01a0f05a-dc61-549c-e1ab-0938761ffe80`. Actual uploaded bundle: 466,753,078 bytes. Cloud API confirmed `published` and `success`.
+- Online functionality: the initial browser check showed plotting errors; the user subsequently confirmed the issue was resolved. No additional independent browser verification was completed after that confirmation.
+- Cleanup: removed generated archives, logs, detailed test outputs, redundant staging payloads and standalone validation/legacy shinyapps.io scripts. Retained the summary, dependency versions, core generation/deployment scripts and local deployment records.
 - No hosting secrets are included in code or the manifest.
 
 See the repository README for the Connect Cloud publishing steps. Official references: [publishing from GitHub](https://docs.posit.co/connect-cloud/user/publish/github.html), [bundle size limits](https://docs.posit.co/connect-cloud/user/publish/index.html), [plan comparison](https://connect.posit.cloud/plans).

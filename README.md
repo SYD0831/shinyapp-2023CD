@@ -27,11 +27,29 @@ The app restores `sc1assay_RNA.h5` from ten binary parts on first startup, using
 4. Grant the Posit Connect Cloud GitHub App access to **SYD0831/shinyapp-2023CD** if prompted, then select that repository.
 5. Select branch **main** and primary file **shinyApp/app.R**. `manifest.json` is in the same directory.
 6. For initial testing, disable **Automatically publish on push**. Set the title to **Single-cell Atlas** and click **Publish**.
-7. Watch the build logs, then test Cell Type coloring, CD34/LYZ gene search and all six subset fields. The first launch restores the HDF5 automatically; no data upload, secret variable, or runtime package installation is needed.
+7. Watch the build logs, then test Cell Type coloring, MCL1 gene search and all six subset fields. The first launch restores the HDF5 automatically.
 
-If the repository does not appear, check the GitHub App's selected repository permissions. If a dependency fails, inspect the first package installation error in the build log. Cloud Linux execution has not yet been tested; successful local tests and manifest generation do not guarantee a cloud build.
+If the repository does not appear, check the GitHub App's selected repository permissions. If a dependency fails, inspect the first package installation error in the build log.
 
 Official documentation: [GitHub deployment](https://docs.posit.co/connect-cloud/user/publish/github.html), [R manifest](https://docs.posit.co/connect-cloud/how-to/r/dependencies.html), [plans](https://connect.posit.cloud/plans).
+
+### Direct upload using rsconnect
+
+Authenticate once in R with this project's library available:
+
+```r
+.libPaths(c(".R-library", .libPaths()))
+rsconnect::connectCloudUser()
+```
+
+Then run:
+
+```sh
+Rscript scripts/deploy_connect_cloud.R --prepare-only
+Rscript scripts/deploy_connect_cloud.R
+```
+
+The script validates and stages the complete HDF5 with runtime files under `.deploy/connect-cloud/`. It uploads to account `syd088` as `single-cell-atlas-direct`. Binary parts and the original Seurat object are excluded. Credentials stay in the local rsconnect configuration. Later runs update the direct-upload app using its saved deployment record.
 
 ## Metadata and colors
 
@@ -56,19 +74,18 @@ Keep the source `pei23_scarche_anno.Rdata` locally in the project root. It must 
 
 ```sh
 Rscript scripts/generate_app.R
-Rscript scripts/validate_runtime.R
-Rscript scripts/validate_portable.R
-Rscript scripts/check_bundle.R
 ```
 
 `generate_app.R` also recreates the expression parts and manifest. For code/config-only presentation changes, run `Rscript scripts/configure_app.R`, then `Rscript scripts/prepare_github.R` to refresh the deployment manifest. Do not edit generated files as the only copy of a customization.
 
-`scripts/deploy_shinyapps.R` remains available for shinyapps.io after configuring credentials separately. It deploys only the allowlisted runtime files.
+The core project contains `shinyApp/` (runtime), `config/` (customization), `scripts/` (setup, generation and deployment), and `reports/` (validation summary and dependency versions). The original Seurat input and local R library stay local. Temporary deployment payloads are regenerated as needed; saved deployment records are retained for updating the same cloud app.
 
 ## Provenance and validation
 
 Generated with ShinyCell2 1.0.0, commit `33bfc8ba232f0c829b6b23181cb83089d58e7879`, on R 4.4.2. Generation uses Seurat 5.3.0 / SeuratObject 5.1.0. The cloud runtime manifest has CRAN dependencies; Seurat, ShinyCell2 and Bioconductor packages are not needed at runtime.
 
-See `reports/VALIDATION.md` and the machine-readable checks in `reports/`. The LungMAP reference was inspected in Chrome. The UI preserves ShinyCell-style navigation, compact controls and side-by-side plots without LungMAP branding. A cloud deployment has not been performed.
+See `reports/VALIDATION.md` and `reports/runtime-dependencies.csv`. The LungMAP reference was inspected in Chrome. The UI preserves ShinyCell-style navigation, compact controls and side-by-side plots without LungMAP branding. The direct rsconnect deployment completed successfully and the user confirmed the online issue was resolved.
+
+Published app: [Single-cell Atlas](https://01a0f05a-dc61-549c-e1ab-0938761ffe80.share.connect.posit.cloud/).
 
 Generated application code derives from [ShinyCell2](https://github.com/the-ouyang-lab/ShinyCell2) (GPL-3). See `COPYING` and `THIRD_PARTY_NOTICES.md`. No new license is assigned to the biological data by this repository.
